@@ -5,12 +5,10 @@ from skimage.io import imread
 from scipy.stats import entropy, skew, kurtosis
 from tqdm import tqdm
 
-# === USER-DEFINED PATHS ===
+
 image_dir = 'D:\CapstoneV2\DataSets\COCOTrainingImagespng2017'     
 metadata_csv = 'D:\CapstoneV2\Metadata\csv\stego_metadata.csv'
 output_csv = 'MetaData/csv/blind_features.csv'
-
-# === Feature Extraction ===
 
 def extract_features(image_gray):
     features = []
@@ -37,11 +35,11 @@ def extract_features(image_gray):
 
     return features
 
-# === Load metadata ===
+
 
 metadata = pd.read_csv(metadata_csv)
 
-# === Extract Features ===
+
 
 all_features = []
 
@@ -67,7 +65,7 @@ for _, row in tqdm(metadata.iterrows(), total=metadata.shape[0]):
     feats = extract_features(image)
     all_features.append([filename] + feats + [label])
 
-# === Save CSV ===
+
 
 bitplane_cols = [f'{stat}_bitplane{b}' for b in range(8) for stat in ['mean', 'var', 'energy', 'entropy']]
 global_cols = ['mean_intensity', 'var_intensity', 'entropy_intensity', 'skewness', 'kurtosis']

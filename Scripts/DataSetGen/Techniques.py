@@ -10,7 +10,7 @@ def text_to_binary(text):
 def fit_message_to_image(image, message):
     """Ensure the message (including delimiter) fits within the image capacity."""
     binary_message = text_to_binary(message)
-    max_bits = image.size  # Total available values (H x W x C)
+    max_bits = image.size  
 
     if len(binary_message) > max_bits:
         print(f"[WARNING] Message too long ({len(binary_message)} bits). Truncating to fit.")

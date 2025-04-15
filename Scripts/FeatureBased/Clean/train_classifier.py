@@ -1,4 +1,3 @@
-# === Required Imports ===
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
@@ -8,29 +7,29 @@ import seaborn as sns
 import joblib
 import os
 
-# === User-supplied paths (SET THESE YOURSELF) ===
+
 features_csv = 'D:\CapstoneV2\Metadata\csv\diff_features.csv'
 model_output_path = 'MetaData/models/random_forest_model.pkl'
 conf_matrix_output_path = 'MetaData/images/CleanConfusionMmatrix.png'
 
-# === Load Extracted Features ===
+
 df = pd.read_csv(features_csv)
 
-# === Separate features and labels ===
+
 X = df.drop(columns=['filename', 'label'])
 y = df['label']
 
-# === Train-Test Split ===
+
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.25, random_state=42, stratify=y
 )
 
-# === Train Random Forest ===
+
 print("Training Random Forest...")
 model = RandomForestClassifier(n_estimators=100, random_state=42)
 model.fit(X_train, y_train)
 
-# === Evaluate ===
+
 y_pred = model.predict(X_test)
 
 print("\n=== Classification Report ===")
@@ -40,7 +39,7 @@ print("\n=== Confusion Matrix ===")
 cm = confusion_matrix(y_test, y_pred)
 print(cm)
 
-# === Save confusion matrix figure ===
+
 plt.figure(figsize=(6,5))
 sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", xticklabels=['Clean', 'LSB', 'DCT'], yticklabels=['Clean', 'LSB', 'DCT'])
 plt.xlabel("Predicted")
@@ -48,19 +47,19 @@ plt.ylabel("True")
 plt.title("Confusion Matrix")
 plt.tight_layout()
 plt.savefig(conf_matrix_output_path)
-plt.close()   # <--- Prevents display
+plt.close()  
 
 print(f"Confusion matrix saved to {conf_matrix_output_path}")
 
-# === Save model ===
 
-# Make sure folder exists
+
+
 os.makedirs(os.path.dirname(model_output_path), exist_ok=True)
 
 joblib.dump(model, model_output_path)
 print(f"Model saved to {model_output_path}")
 
-# === Feature Importance ===
+
 importances = model.feature_importances_
 feature_names = X.columns
 sorted_idx = importances.argsort()[::-1]

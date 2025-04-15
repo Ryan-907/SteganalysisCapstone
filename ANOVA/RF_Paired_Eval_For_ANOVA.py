@@ -16,4 +16,4 @@ for true, pred, fname in zip(y, y_pred, filenames):
     results.append({"filename": fname, "model_type": "RF_Paired", "correct": correct})
 
 pd.DataFrame(results).to_csv("Metadata/csv/RF_Paired_predictions_binary.csv", index=False)
-print("✅ Saved RF Paired binary predictions to Metadata/csv/RF_Paired_predictions_binary.csv")
+print("Saved RF Paired binary predictions to Metadata/csv/RF_Paired_predictions_binary.csv")

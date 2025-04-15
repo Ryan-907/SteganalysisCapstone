@@ -9,24 +9,24 @@ from Techniques import embed_dct, embed_lsb, DELIMITER
 
 payload_length = cycle(['sentence', 'paragraph', 'full'])
 
-# === CONFIGURATION ===
+
 source_dir = "DataSets/COCOpng2017Sample"
 output_dir = "DataSets/CCOCOTrainingImagespng2017"
 csv_filename = "stego_metadata.csv"
 texts_path = "metadata/texts"
+
 
 train_ratio = 0.8
 stego_ratio = 0.66
 
 sample = os.listdir(source_dir)
 
-# === Step 2: Train-Test Split ===
 random.shuffle(sample)
 train_size = int(len(sample) * train_ratio)
 train_images = sample[:train_size]
 test_images = sample[train_size:]
 
-# === Step 3: Apply Stego Attacks & Generate CSV ===
+
 csv_data = []
 
 def select_text(path: str, delim, length: str = None) -> tuple:
@@ -97,13 +97,12 @@ def process_images(image_list, split):
         if (idx + 1) % 100 == 0:
             print(f"  → Processed {idx + 1}/{len(image_list)} images...")
 
-# === Step 4: Process Train and Test Images ===
 process_images(train_images, "Train")
 process_images(test_images, "Test")
 
-# === Step 5: Save CSV File ===
+
 df = pd.DataFrame(csv_data, columns=["Filename", "Label", "Text Source", "Text Type"])
 os.makedirs(output_dir, exist_ok=True)
 df.to_csv(os.path.join(output_dir, csv_filename), index=False)
 
-print(f"✅ Dataset generation complete! CSV saved at {output_dir}/{csv_filename}")
+print(f"Dataset generation complete! CSV saved at {output_dir}/{csv_filename}")

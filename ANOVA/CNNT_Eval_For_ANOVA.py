@@ -58,4 +58,4 @@ with torch.no_grad():
             results.append({"filename": fname, "model_type": "CNN", "correct": correct})
 
 pd.DataFrame(results).to_csv(output_csv, index=False)
-print(f"✅ Saved CNN binary predictions to {output_csv}")
+print(f"Saved CNN binary predictions to {output_csv}")

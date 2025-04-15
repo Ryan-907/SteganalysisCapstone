@@ -6,12 +6,12 @@ from torchvision import transforms
 from PIL import Image
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 
-# === CONFIGURATION ===
+
 csv_file = "Metadata\stego_metadata.csv"
 image_dir = "D:\CapstoneV2\DataSets\COCOTrainingImagespng2017"
 sample_size = 20
 
-# === 1. Label Distribution Check ===
+
 df = pd.read_csv(csv_file)
 if 'Label' not in df.columns:
     raise ValueError("CSV must contain a 'Label' column.")
@@ -19,7 +19,6 @@ if 'Label' not in df.columns:
 print("\n📊 Label Distribution:")
 print(df['Label'].value_counts())
 
-# === 2. Manual Image Preview (Clean vs. LSB vs. DCT) ===
 label_map = {0: 'Clean', 1: 'LSB', 2: 'DCT'}
 class_samples = {0: [], 1: [], 2: []}
 
@@ -41,7 +40,6 @@ plt.suptitle("🔍 Sample Images by Class")
 plt.tight_layout()
 plt.show()
 
-# === 3. Overfit Test on Small Sample ===
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import Dataset, DataLoader
@@ -102,7 +100,7 @@ for epoch in range(10):
         total += labels.size(0)
     print(f"Epoch {epoch+1} | Loss: {total_loss:.4f} | Accuracy: {correct}/{total} ({correct/total:.2%})")
 
-# === 4. Confusion Matrix ===
+
 print("\n📊 Generating confusion matrix for small sample:")
 model.eval()
 y_true, y_pred = [], []
